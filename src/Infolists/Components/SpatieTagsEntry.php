@@ -12,6 +12,8 @@ class SpatieTagsEntry extends TextEntry
 {
     protected string | Closure | AllTagTypes | null $type;
 
+    protected Model $job;
+
     protected function setUp(): void
     {
         parent::setUp();
@@ -27,7 +29,7 @@ class SpatieTagsEntry extends TextEntry
     public function getState(): array
     {
         $state = parent::getState();
-
+        $job = $this->getJob();
         if ($state && (! $state instanceof Collection)) {
             return $state;
         }
@@ -57,7 +59,7 @@ class SpatieTagsEntry extends TextEntry
             if ($this->isAnyTagTypeAllowed()) {
                 $tags = $record->getRelationValue('tags');
             } else {
-                $tags = $record->tagsWithType($type);
+                $tags = $record->tagsWithType($job, $type);
             }
 
             $state = [
@@ -76,9 +78,21 @@ class SpatieTagsEntry extends TextEntry
         return $this;
     }
 
+    public function job(Model $job): static
+    {
+        $this->job = $job;
+
+        return $this;
+    }
+
     public function getType(): string | AllTagTypes | null
     {
         return $this->evaluate($this->type);
+    }
+
+    public function getJob(): int
+    {
+        return $this->job->id;
     }
 
     public function isAnyTagTypeAllowed(): bool

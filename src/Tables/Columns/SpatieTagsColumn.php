@@ -14,6 +14,8 @@ class SpatieTagsColumn extends TextColumn
 {
     protected string | Closure | AllTagTypes | null $type;
 
+    protected Model $job;
+
     protected function setUp(): void
     {
         parent::setUp();
@@ -74,9 +76,21 @@ class SpatieTagsColumn extends TextColumn
         return $this;
     }
 
+    public function job(Model $job): static
+    {
+        $this->job = $job;
+
+        return $this;
+    }
+
     public function getType(): string | AllTagTypes | null
     {
         return $this->evaluate($this->type);
+    }
+
+    public function getJob(): int
+    {
+        return $this->job->id;
     }
 
     public function isAnyTagTypeAllowed(): bool
