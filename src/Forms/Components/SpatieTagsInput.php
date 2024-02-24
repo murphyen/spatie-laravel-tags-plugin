@@ -12,6 +12,8 @@ class SpatieTagsInput extends TagsInput
 {
     protected string | Closure | AllTagTypes | null $type;
 
+    protected $job;
+
     protected function setUp(): void
     {
         parent::setUp();
@@ -95,8 +97,9 @@ class SpatieTagsInput extends TagsInput
 
     public function job(Model $model)
     {
-        dd($model->id);
-        return $model->id;
+        $this->job = $model;
+        dd($this);
+        return $this;
     }
 
     public function getSuggestions(): array
