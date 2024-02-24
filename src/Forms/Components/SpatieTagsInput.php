@@ -46,7 +46,7 @@ class SpatieTagsInput extends TagsInput
                 ($type = $component->getType()) &&
                 (! $component->isAnyTagTypeAllowed())
             ) {
-                $record->syncTagsWithType($state, $type);
+                $record->syncTagsWithType($job, $state, $type);
 
                 return;
             }
@@ -98,7 +98,7 @@ class SpatieTagsInput extends TagsInput
     public function job(Model $model)
     {
         $this->job = $model;
-        dd($this);
+
         return $this;
     }
 
