@@ -124,7 +124,7 @@ class SpatieTagsInput extends TagsInput
                 fn (Builder $query) => $query->where('type', null),
             );
         }
-        dd($query->pluck('name')->all());
+
         return $query->pluck('name')->all();
     }
 
