@@ -122,6 +122,7 @@ class SpatieTagsInput extends TagsInput
                 filled($type),
                 fn (Builder $query) => $query->where('type', $type),
                 fn (Builder $query) => $query->where('type', null),
+                fn (Builder $query) => $query->where('job_id', $this->getJob()->id)
             );
         }
 
