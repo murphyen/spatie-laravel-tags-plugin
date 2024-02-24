@@ -125,7 +125,7 @@ class SpatieTagsInput extends TagsInput
                 fn (Builder $query) => $query->where('job_id', $this->getJob()->id)
             );
         }
-        dd($query);
+        dd($query->pluck('name')->all());
         return $query->pluck('name')->all();
     }
 
