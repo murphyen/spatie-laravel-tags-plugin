@@ -95,7 +95,7 @@ class SpatieTagsInput extends TagsInput
 
     public function job(Model $model)
     {
-        dd($model);
+        dd($model->id);
         return $model->id;
     }
 
