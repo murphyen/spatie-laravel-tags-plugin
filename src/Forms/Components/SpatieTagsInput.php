@@ -115,14 +115,13 @@ class SpatieTagsInput extends TagsInput
         $model = $this->getModel();
         $tagClass = $model ? $model::getTagClassName() : config('tags.tag_model', Tag::class);
         $type = $this->getType();
-        $query = $tagClass::query();
+        $query = $tagClass::query()->where('job_id', $this->getJob()->id);
 
         if (! $this->isAnyTagTypeAllowed()) {
             $query->when(
                 filled($type),
                 fn (Builder $query) => $query->where('type', $type),
                 fn (Builder $query) => $query->where('type', null),
-                fn (Builder $query) => $query->where('job_id', $this->getJob()->id)
             );
         }
         dd($query->pluck('name')->all());
