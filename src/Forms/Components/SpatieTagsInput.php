@@ -27,7 +27,7 @@ class SpatieTagsInput extends TagsInput
 
             $type = $component->getType();
             $record->load('tags');
-            dd($record);
+
             if ($component->isAnyTagTypeAllowed()) {
                 $tags = $record->getRelationValue('tags');
             } else {
@@ -35,7 +35,7 @@ class SpatieTagsInput extends TagsInput
                 $tags = $record->tagsWithType($job, $type);
             }
 
-            $component->state($tags->pluck('name')->all());
+            dd($component->state($tags->pluck('name')->all()));
         });
 
         $this->saveRelationshipsUsing(static function (SpatieTagsInput $component, ?Model $record, array $state) {
