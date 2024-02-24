@@ -93,6 +93,12 @@ class SpatieTagsInput extends TagsInput
         return $this;
     }
 
+    public function job(Model $model)
+    {
+        dd($model);
+        return $model->id;
+    }
+
     public function getSuggestions(): array
     {
         if ($this->suggestions !== null) {
