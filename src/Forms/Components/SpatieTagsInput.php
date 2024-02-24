@@ -27,13 +27,13 @@ class SpatieTagsInput extends TagsInput
 
             $type = $component->getType();
             $record->load('tags');
-            dd($record);
 
             if ($component->isAnyTagTypeAllowed()) {
                 $tags = $record->getRelationValue('tags');
             } else {
                 $job = $component->getJob();
                 $tags = $record->tagsWithType($job, $type);
+                dd($tags);
             }
 
             $component->state($tags->pluck('name')->all());
