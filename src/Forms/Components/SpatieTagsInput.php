@@ -46,7 +46,8 @@ class SpatieTagsInput extends TagsInput
                 ($type = $component->getType()) &&
                 (! $component->isAnyTagTypeAllowed())
             ) {
-                $record->syncTagsWithType($this->job, $state, $type);
+                $job = $component->getJob();
+                $record->syncTagsWithType($job, $state, $type);
 
                 return;
             }
@@ -127,6 +128,12 @@ class SpatieTagsInput extends TagsInput
     public function getType(): string | AllTagTypes | null
     {
         return $this->evaluate($this->type);
+    }
+
+
+    public function getJob()
+    {
+        return $this->job;
     }
 
     public function isAnyTagTypeAllowed(): bool
