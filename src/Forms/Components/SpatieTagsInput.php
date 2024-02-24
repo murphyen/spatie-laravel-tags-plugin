@@ -77,8 +77,8 @@ class SpatieTagsInput extends TagsInput
 
         $tags = collect($state)->map(function ($tagName) use ($tagClassName) {
             $locale = $tagClassName::getLocale();
-
-            $tag = $tagClassName::findFromStringOfAnyType($tagName, $locale);
+            $job = $this->getJob();
+            $tag = $tagClassName::findFromStringOfAnyType($job, $tagName, $locale);
 
             if ($tag?->isEmpty() ?? true) {
                 $tag = $tagClassName::create([
