@@ -36,6 +36,17 @@ trait HasTranslations
         return $this->getTranslation($key, $this->getLocale(), $this->useFallbackLocale());
     }
 
+    protected function mutateAttributeForArray($key, $value): mixed
+    {
+        if (! $this->isTranslatableAttribute($key)) {
+            return parent::mutateAttributeForArray($key, $value);
+        }
+
+        $translations = $this->getTranslations($key);
+
+        return array_map(fn ($value) => parent::mutateAttributeForArray($key, $value), $translations);
+    }
+
     public function setAttribute($key, $value)
     {
         if ($this->isTranslatableAttribute($key) && is_array($value)) {
@@ -142,7 +153,7 @@ trait HasTranslations
 
         $translations[$locale] = $value;
 
-        $this->attributes[$key] = $this->asJson($translations);
+        $this->attributes[$key] = json_encode($translations, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
 
         event(new TranslationHasBeenSetEvent($this, $key, $locale, $oldValue, $value));
 
