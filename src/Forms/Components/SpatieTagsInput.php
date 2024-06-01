@@ -17,9 +17,9 @@ class SpatieTagsInput extends TagsInput
     protected function setUp(): void
     {
         parent::setUp();
-        dd();
-        $this->type(new AllTagTypes());
 
+        $this->type(new AllTagTypes());
+        dd($this->type);
         $this->loadStateFromRelationshipsUsing(static function (SpatieTagsInput $component, ?Model $record): void {
             if (! method_exists($record, 'tagsWithType')) {
                 return;
