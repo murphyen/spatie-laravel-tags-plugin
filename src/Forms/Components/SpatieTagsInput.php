@@ -146,8 +146,22 @@ class SpatieTagsInput extends TagsInput
         return $this->getType() instanceof AllTagTypes;
     }
 
-    public function setState()
+    public function setState(SpatieTagsInput $component, ?Model $record): void
     {
-        dd('state');
+        if (! method_exists($record, 'tagsWithType')) {
+            return;
+        }
+
+        $type = $component->getType();
+        $record->load('tags');
+
+        if ($component->isAnyTagTypeAllowed()) {
+            $tags = $record->getRelationValue('tags');
+        } else {
+            $job = $component->getJob();
+            $tags = $record->tagsWithType($job->id, $type);
+        }
+
+        $component->state($tags->pluck('name')->all());
     }
 }
