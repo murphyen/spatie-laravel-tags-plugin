@@ -20,24 +20,26 @@ class SpatieTagsInput extends TagsInput
 
         $this->type(new AllTagTypes());
 
-        $this->loadStateFromRelationshipsUsing(static function (SpatieTagsInput $component, ?Model $record): void {
-            if (! method_exists($record, 'tagsWithType')) {
-                return;
-            }
+//        $this->loadStateFromRelationshipsUsing(static function (SpatieTagsInput $component, ?Model $record): void {
+//            if (! method_exists($record, 'tagsWithType')) {
+//                return;
+//            }
+//
+//            $type = $component->getType();
+//            dd($type);
+//            $record->load('tags');
+//
+//            if ($component->isAnyTagTypeAllowed()) {
+//                $tags = $record->getRelationValue('tags');
+//            } else {
+//                $job = $component->getJob();
+//                $tags = $record->tagsWithType($job->id, $type);
+//            }
+//
+//            $component->state($tags->pluck('name')->all());
+//        });
 
-            $type = $component->getType();
-            dd($type);
-            $record->load('tags');
-
-            if ($component->isAnyTagTypeAllowed()) {
-                $tags = $record->getRelationValue('tags');
-            } else {
-                $job = $component->getJob();
-                $tags = $record->tagsWithType($job->id, $type);
-            }
-
-            $component->state($tags->pluck('name')->all());
-        });
+        $this->setState();
 
         $this->saveRelationshipsUsing(static function (SpatieTagsInput $component, ?Model $record, array $state) {
             if (! (method_exists($record, 'syncTagsWithType') && method_exists($record, 'syncTags'))) {
@@ -142,5 +144,10 @@ class SpatieTagsInput extends TagsInput
     public function isAnyTagTypeAllowed(): bool
     {
         return $this->getType() instanceof AllTagTypes;
+    }
+
+    public function setState()
+    {
+        dd('state');
     }
 }
