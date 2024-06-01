@@ -34,7 +34,7 @@ class SpatieTagsInput extends TagsInput
                 $job = $component->getJob();
                 $tags = $record->tagsWithType($job, $type);
             }
-            dd($tags);
+
             $component->state($tags->pluck('name')->all());
         });
 
