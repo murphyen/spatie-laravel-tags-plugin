@@ -19,7 +19,7 @@ class SpatieTagsInput extends TagsInput
         parent::setUp();
 
         $this->type(new AllTagTypes());
-        dd($this->type);
+
         $this->loadStateFromRelationshipsUsing(static function (SpatieTagsInput $component, ?Model $record): void {
             if (! method_exists($record, 'tagsWithType')) {
                 return;
@@ -34,7 +34,7 @@ class SpatieTagsInput extends TagsInput
                 $job = $component->getJob();
                 $tags = $record->tagsWithType($job->id, $type);
             }
-
+            dd($tags);
             $component->state($tags->pluck('name')->all());
         });
 
