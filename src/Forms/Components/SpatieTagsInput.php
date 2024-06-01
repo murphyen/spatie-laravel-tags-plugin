@@ -17,7 +17,7 @@ class SpatieTagsInput extends TagsInput
     protected function setUp(): void
     {
         parent::setUp();
-
+        dd();
         $this->type(new AllTagTypes());
 
         $this->loadStateFromRelationshipsUsing(static function (SpatieTagsInput $component, ?Model $record): void {
@@ -27,7 +27,7 @@ class SpatieTagsInput extends TagsInput
 
             $type = $component->getType();
             $record->load('tags');
-            dd($record);
+
             if ($component->isAnyTagTypeAllowed()) {
                 $tags = $record->getRelationValue('tags');
             } else {
