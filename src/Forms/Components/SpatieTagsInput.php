@@ -39,7 +39,7 @@ class SpatieTagsInput extends TagsInput
 //            $component->state($tags->pluck('name')->all());
 //        });
 
-        $this->setState();
+//        $this->setState();
 
         $this->saveRelationshipsUsing(static function (SpatieTagsInput $component, ?Model $record, array $state) {
             if (! (method_exists($record, 'syncTagsWithType') && method_exists($record, 'syncTags'))) {
