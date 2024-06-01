@@ -20,7 +20,7 @@ class SpatieTagsInput extends TagsInput
 
         $this->type(new AllTagTypes());
 
-//        $this->loadStateFromRelationshipsUsing(static function (SpatieTagsInput $component, ?Model $record): void {
+        $this->loadStateFromRelationshipsUsing(static function (SpatieTagsInput $component, ?Model $record): void {
 //            if (! method_exists($record, 'tagsWithType')) {
 //                return;
 //            }
@@ -37,9 +37,8 @@ class SpatieTagsInput extends TagsInput
 //            }
 //
 //            $component->state($tags->pluck('name')->all());
-//        });
-
-//        $this->setState();
+            dd('here');
+        });
 
         $this->saveRelationshipsUsing(static function (SpatieTagsInput $component, ?Model $record, array $state) {
             if (! (method_exists($record, 'syncTagsWithType') && method_exists($record, 'syncTags'))) {
@@ -146,22 +145,4 @@ class SpatieTagsInput extends TagsInput
         return $this->getType() instanceof AllTagTypes;
     }
 
-    public function setState(SpatieTagsInput $component, ?Model $record): void
-    {
-        if (! method_exists($record, 'tagsWithType')) {
-            return;
-        }
-
-        $type = $component->getType();
-        $record->load('tags');
-
-        if ($component->isAnyTagTypeAllowed()) {
-            $tags = $record->getRelationValue('tags');
-        } else {
-            $job = $component->getJob();
-            $tags = $record->tagsWithType($job->id, $type);
-        }
-        dd($tags);
-        $component->state($tags->pluck('name')->all());
-    }
 }
